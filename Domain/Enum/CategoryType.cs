@@ -2,6 +2,6 @@ namespace Domain.Enum;
 
 public enum CategoryType
 {
-    Furniture ,
-    Decoration
+    curtain ,
+    blinds
 }  
