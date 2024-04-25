@@ -11,7 +11,7 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddTransient<IBaseService<Customer>, CustomerService>();
-
+        services.AddTransient<IBaseService<Product>, ProductService>();
         return services;
     }
 }
