@@ -23,9 +23,9 @@ namespace Web.API.Controllers
         [HttpGet(ApiEndpoints.Product.Get)]
         public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken token)
         {
-            var product = await ProductService.GetAsync(id, token);
+            var departmentExist = await ProductService.GetAsync(id, token);
 
-            var response = mapper.Map<SingleProductResponse>(product);
+            var response = mapper.Map<SingleProductResponse>(departmentExist);
 
             return response == null ? NotFound() : Ok(response);
         }
@@ -33,9 +33,9 @@ namespace Web.API.Controllers
         [HttpGet(ApiEndpoints.Product.GetAll)]
         public async Task<IActionResult> GetAll(CancellationToken token)
         {
-            var products = await ProductService.GetAllAsync(token);
+            var departments = await ProductService.GetAllAsync(token);
 
-            var response = mapper.Map<IEnumerable<SingleProductResponse>>(products);
+            var response = mapper.Map<IEnumerable<SingleProductResponse>>(departments);
 
             return Ok(response);
         }
@@ -49,10 +49,9 @@ namespace Web.API.Controllers
                 return BadRequest("Invalid request data.");
             }
 
-            Product  product= await  ProductService.GetAsync(id, token);
+            Product  product= await ProductService.GetAsync(id, token);
 
             product.Name = request.Name;
-            product.Price = request.Price;
            
 
             await ProductService.UpdateAsync(product, token);
@@ -67,7 +66,7 @@ namespace Web.API.Controllers
         {
             var response = await ProductService.DeleteAsync(id, token);
 
-            return response ? Ok() : NotFound($"product with ID {id} not found.");
+            return response ? Ok() : NotFound($"Product with ID {id} not found.");
         }
     }
 }
